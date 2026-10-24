@@ -1,0 +1,97 @@
+site_name: ACE3P GUI User Guide
+site_description: How to install ACE3P GUI, set up ACE3P simulations, submit them to NERSC Perlmutter and S3DF, and post-process the results.
+site_author: M. Othman and A. Lau, SLAC National Accelerator Laboratory
+site_url: https://mothmanslac.github.io/ace3p-gui-docs/
+repo_url: https://github.com/mothmanslac/ace3p-gui-docs
+repo_name: mothmanslac/ace3p-gui-docs
+edit_uri: edit/main/docs/
+copyright: Copyright &copy; 2026 SLAC National Accelerator Laboratory
+
+docs_dir: docs
+
+theme:
+  name: material
+  logo: images/ace3p-logo.png
+  favicon: images/ace3p-logo.png
+  palette:
+    - media: "(prefers-color-scheme: light)"
+      scheme: default
+      primary: blue
+      accent: indigo
+      toggle:
+        icon: material/weather-night
+        name: Switch to dark mode
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
+      primary: blue
+      accent: indigo
+      toggle:
+        icon: material/weather-sunny
+        name: Switch to light mode
+  features:
+    - navigation.tabs
+    - navigation.sections
+    - navigation.top
+    - navigation.footer
+    - navigation.indexes
+    - search.highlight
+    - search.suggest
+    - content.code.copy
+    - toc.follow
+
+plugins:
+  - search
+  - glightbox
+
+markdown_extensions:
+  - admonition
+  - attr_list
+  - md_in_html
+  - tables
+  - toc:
+      permalink: true
+  - pymdownx.details
+  - pymdownx.superfences
+  - pymdownx.tabbed:
+      alternate_style: true
+  - pymdownx.highlight:
+      anchor_linenums: true
+  - pymdownx.inlinehilite
+  - pymdownx.keys
+  - pymdownx.snippets
+  - pymdownx.tasklist:
+      custom_checkbox: true
+
+nav:
+  - Home: index.md
+  - Getting started:
+      - Install and launch: getting-started/install.md
+      - The interface: getting-started/interface.md
+      - Sign in to a cluster: getting-started/sign-in.md
+  - Tutorial:
+      - Your first Omega3P job: tutorials/omega3p-first-job.md
+  - Simulation Setup:
+      - Choose a solver: simulation-setup/modules.md
+      - Mesh and Cubit parameters: simulation-setup/mesh.md
+      - Fill in the input file: simulation-setup/input-file.md
+      - Simulation Settings (sbatch): simulation-setup/simulation-settings.md
+      - Examples: simulation-setup/examples.md
+  - Running jobs:
+      - Run a simulation: running-jobs/run-simulation.md
+      - Monitor jobs: running-jobs/jobs-dashboard.md
+  - Workflow Orchestration:
+      - Parameter sweeps and optimization: workflow/index.md
+  - Result Post Processing:
+      - Overview: post-processing/index.md
+      - Acdtool: post-processing/acdtool.md
+      - Field Viewer: post-processing/field-viewer.md
+      - Data Explorer: post-processing/data-explorer.md
+      - Workflow Sweeps: post-processing/workflow-sweeps.md
+  - AI Assistant:
+      - Use the AI Assistant: ai/assistant.md
+      - Set up a model provider: ai/providers.md
+      - Self-hosted model with vLLM on NERSC: ai/vllm.md
+  - Reference:
+      - Settings: reference/settings.md
+      - Where the app stores data: reference/data.md
+      - Troubleshooting: reference/troubleshooting.md
