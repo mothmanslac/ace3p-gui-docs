@@ -30,7 +30,8 @@ submits the job, tracks it, and reads the results back.
 4. Use the remaining sections as a reference for each part of the app.
 
 !!! note "Screenshots"
-    Screenshots were taken from version 1.4.15 on Windows. The job names, user
+    Screenshots were taken on Windows from version 1.4.15; the Workflow Sweeps
+    screenshots are from 1.4.17. The job names, user
     name `jdoe` and run directories in them are examples. Your version number is
     shown in **Settings → Updates**.
 

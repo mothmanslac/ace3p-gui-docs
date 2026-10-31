@@ -36,7 +36,7 @@ more detail.
 
 ## Updates
 
-Shows the running version (**ACE3P GUI v1.4.15**) and what is new in it. Quote
+Shows the running version (**ACE3P GUI v1.4.17**) and what is new in it. Quote
 the version when you report a problem.
 
 To update: close the browser tab and the console window, download the new

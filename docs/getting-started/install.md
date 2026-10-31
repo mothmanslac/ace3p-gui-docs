@@ -5,20 +5,20 @@ every dependency and the interface. You do not install anything else.
 
 ## Download
 
-The current release is **v1.4.15**.
+The current release is **v1.4.17**.
 
-[Windows (.exe)](https://github.com/mothmanslac/ace3p-gui-docs/releases/download/v1.4.15/ACE3P-GUI-v1.4.15-windows-x86_64.exe){ .md-button .md-button--primary }
-[Linux (.tar.gz)](https://github.com/mothmanslac/ace3p-gui-docs/releases/download/v1.4.15/ACE3P-GUI-v1.4.15-linux-x86_64.tar.gz){ .md-button }
+[Windows (.exe)](https://github.com/mothmanslac/ace3p-gui-docs/releases/download/v1.4.17/ACE3P-GUI-v1.4.17-windows-x86_64.exe){ .md-button .md-button--primary }
+[Linux (.tar.gz)](https://github.com/mothmanslac/ace3p-gui-docs/releases/download/v1.4.17/ACE3P-GUI-v1.4.17-linux-x86_64.tar.gz){ .md-button }
 
 Release notes, checksums and earlier versions are on the
 [releases page](https://github.com/mothmanslac/ace3p-gui-docs/releases).
 
 | You are on | Download | Run |
 |---|---|---|
-| Windows | `ACE3P-GUI-v1.4.15-windows-x86_64.exe` | Double-click it |
-| Perlmutter (NERSC) | `ACE3P-GUI-v1.4.15-linux-x86_64.tar.gz` | Unpack, run `./ACE3P-GUI` |
-| S3DF (SLAC) | `ACE3P-GUI-v1.4.15-linux-x86_64.tar.gz` | Unpack, run `./ACE3P-GUI` |
-| Linux desktop | `ACE3P-GUI-v1.4.15-linux-x86_64.tar.gz` | Unpack, run `./ACE3P-GUI` |
+| Windows | `ACE3P-GUI-v1.4.17-windows-x86_64.exe` | Double-click it |
+| Perlmutter (NERSC) | `ACE3P-GUI-v1.4.17-linux-x86_64.tar.gz` | Unpack, run `./ACE3P-GUI` |
+| S3DF (SLAC) | `ACE3P-GUI-v1.4.17-linux-x86_64.tar.gz` | Unpack, run `./ACE3P-GUI` |
+| Linux desktop | `ACE3P-GUI-v1.4.17-linux-x86_64.tar.gz` | Unpack, run `./ACE3P-GUI` |
 | macOS | No prebuilt binary | [Run from source](#run-from-source) |
 
 The Linux build needs glibc 2.38 or newer. Check with `ldd --version`. An older
@@ -28,7 +28,7 @@ On Perlmutter you can skip the download and run the shared install from a
 ThinLinc terminal:
 
 ```bash
-/global/cfs/cdirs/ace3p/gui/ACE3P-GUI-v1.4.15-linux-x86_64/ACE3P-GUI
+/global/cfs/cdirs/ace3p/gui/ACE3P-GUI-v1.4.17-linux-x86_64/ACE3P-GUI
 ```
 
 The application starts a small local server and opens the interface in your
@@ -38,7 +38,7 @@ the application: close it to stop the app.
 ## Windows
 
 1. Download
-   [ACE3P-GUI-v1.4.15-windows-x86_64.exe](https://github.com/mothmanslac/ace3p-gui-docs/releases/download/v1.4.15/ACE3P-GUI-v1.4.15-windows-x86_64.exe).
+   [ACE3P-GUI-v1.4.17-windows-x86_64.exe](https://github.com/mothmanslac/ace3p-gui-docs/releases/download/v1.4.17/ACE3P-GUI-v1.4.17-windows-x86_64.exe).
 2. Double-click it.
 3. If Windows SmartScreen shows **Windows protected your PC**, click
    **More info**, then **Run anyway**. The warning appears because the file is
@@ -55,15 +55,15 @@ Run the app on the cluster from a graphical desktop: **ThinLinc** on Perlmutter,
 **NoMachine** on S3DF. Open a terminal on that desktop and run:
 
 ```bash
-tar xzf ACE3P-GUI-v1.4.15-linux-x86_64.tar.gz
-cd ACE3P-GUI-v1.4.15-linux-x86_64
+tar xzf ACE3P-GUI-v1.4.17-linux-x86_64.tar.gz
+cd ACE3P-GUI-v1.4.17-linux-x86_64
 ./ACE3P-GUI
 ```
 
 To download straight to the cluster:
 
 ```bash
-wget https://github.com/mothmanslac/ace3p-gui-docs/releases/download/v1.4.15/ACE3P-GUI-v1.4.15-linux-x86_64.tar.gz
+wget https://github.com/mothmanslac/ace3p-gui-docs/releases/download/v1.4.17/ACE3P-GUI-v1.4.17-linux-x86_64.tar.gz
 ```
 
 Firefox opens on the app. You do not sign in: the app detects that it runs on
@@ -100,7 +100,7 @@ Cubit and ParaView do not open this way. Use ThinLinc or NoMachine for them.
 ### Single-file build
 
 Some releases also have `ACE3P-GUI-v<version>-linux-x86_64.bin`, the same app
-as one file. v1.4.15 does not. It unpacks itself under `~/.cache/ACE3P-GUI` on every launch, so it
+as one file. v1.4.17 does not. It unpacks itself under `~/.cache/ACE3P-GUI` on every launch, so it
 starts more slowly than the unpacked folder.
 
 ## Command-line options

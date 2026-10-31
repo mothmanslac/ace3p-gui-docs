@@ -8,7 +8,7 @@ tabs:
 | [Acdtool](acdtool.md) | Compute RF quantities (R/Q, kick factors, field maps, multipoles, surface fields) with `acdtool postprocess rf`. |
 | [Field Viewer](field-viewer.md) | Draw the fields of `.mod` files, or a mesh, in 3-D. |
 | [Data Explorer](data-explorer.md) | Browse the run directory, read logs, and plot any column-formatted result file. |
-| [Workflow Sweeps](workflow-sweeps.md) | Plot one quantity across all evaluations of a LUME-ACE3P study. |
+| [Workflow Sweeps](workflow-sweeps.md) | Plot the results of a LUME-ACE3P study: parameter sweeps, optimization history, a Gaussian-process surrogate, or your own script. |
 
 ## Source bar
 
