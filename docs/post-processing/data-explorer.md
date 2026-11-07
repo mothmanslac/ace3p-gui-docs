@@ -3,7 +3,14 @@
 The **Data Explorer** shows the working directory as a file tree and opens any
 text file in a **Log viewer** or a **Plot viewer**.
 
-![Plotting S-parameters from Reflection.out](../images/34-data-explorer.png)
+![|S(0,0)| and |S(0,1)| of a resonant two-port from Reflection.out](../images/34-data-explorer.png)
+
+The example is an S3P run of a cavity coupled to two TEM lines, resonant at
+1.5 GHz. `Reflection.out` holds the magnitudes of the S-parameters:
+|S(0,0)| (reflection) falls to nearly zero at resonance while |S(0,1)|
+(transmission) rises to nearly one, and |S(0,0)|² + |S(0,1)|² stays at or just
+below 1 because the structure is almost lossless. The second curve was added
+with **Hold on**.
 
 ## Browse
 

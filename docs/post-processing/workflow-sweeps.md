@@ -151,7 +151,20 @@ variables; the objective is then marked `objective?`.
 evaluations — an optimizer's `sim_output.txt`, a sweep's output table, a GP
 study's training data — and draws it. The model is fitted in the page.
 
+The example below is a 40-evaluation study of an 11.424 GHz π-mode cell with
+three inputs: `cell_radius` (9.6–10.4 mm), `iris_radius` (2.5–3.5 mm) and
+`iris_thick` (1.5–2.5 mm). The modelled output, `merit`, is smallest where
+the π-mode frequency hits 11.424 GHz with a moderate iris. The frequency falls
+as the cell radius grows and rises with the iris radius, so the best cell
+radius moves with the iris radius.
+
 ![A 1-D slice of the surrogate](../images/35d-gp-slice.png)
+
+The slice shows `merit` along `cell_radius` with the other inputs held at
+the best evaluation: a single minimum near 10.1 mm, a narrow ±2σ band where
+the evaluations are dense, and a wider one towards the edges. The red points
+are all evaluations, at their own values of the held inputs, which is why they
+scatter above the curve.
 
 1. **Inputs → Training table:** choose the table.
 2. **Model → Output:** the column to model. Tick **model log10 of the output**
@@ -170,13 +183,20 @@ study's training data — and draws it. The model is fitted in the page.
 
 ![2-D map of the surrogate](../images/35e-gp-map.png)
 
+The map over `cell_radius` and `iris_radius` shows the valley of good
+designs running diagonally: a larger iris needs a larger cell to keep the
+frequency on target.
+
 ![Leave-one-out predictions](../images/35f-gp-loo.png)
 
+Every evaluation lies close to the diagonal, with a leave-one-out R² of 0.99.
+
 !!! note "How far to trust the model"
-    Read the leave-one-out R² before using a slice or a map. A value near 1
-    means the model predicts evaluations it has not seen. A low value, such as
-    0.32 for the 15 evaluations above, means the model needs more data and its
-    slices show trends only.
+    Read the leave-one-out R² before using a slice or a map. A value near 1,
+    as here, means the model predicts evaluations it has not seen. A low value
+    (below about 0.8) means the model needs more evaluations, or fewer inputs,
+    and its slices show trends only. As a rule of thumb, use at least ten
+    evaluations per input.
 
 ## Custom script
 

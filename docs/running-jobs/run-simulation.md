@@ -6,6 +6,8 @@ in one step. There is no dialog to fill in.
 
 ## The toolbar
 
+![The Simulation Setup toolbar, ready to run](../images/15-run-simulation.png)
+
 The bar under the header holds, from left to right:
 
 | Control | What it does |
