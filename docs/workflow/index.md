@@ -5,9 +5,10 @@ study. A study runs a chain of steps — for example Cubit → Omega3P — many
 times with different input values, collects chosen results into one table, and
 optionally lets an optimizer pick the next input values.
 
-The builder writes the study's YAML configuration. You submit it with the same
-**Run Simulation** dialog as a single job; it then runs as one Slurm job that
-launches every evaluation inside its allocation.
+The builder writes the study's YAML configuration. A study lives in a folder on
+the cluster; **Run Simulation** saves the YAML and every file it uses there and
+submits it. It runs as one Slurm job that launches every evaluation inside its
+allocation.
 
 ![The workflow builder](../images/28-workflow-yaml.png)
 
@@ -42,9 +43,11 @@ sweep inputs automatically.
 
 ### 2. Open Workflow Orchestration
 
-Press **Workflow Orchestration** in the header. The first time, the builder is
-seeded from the editor: a `cubit` step for the journal, a solver step for the
-input file, the marked fields and the journal variables as inputs.
+Press **Workflow Orchestration** in the header. After a new launch or
+**Clear app** the builder holds an empty configuration with every section
+folded. Press **Seed from editor** to build it from the editor: a `cubit` step
+for the journal, a solver step for the input file, the marked fields and the
+journal variables as inputs. Click a section heading to unfold it.
 
 ![Workflow Orchestration](../images/27-workflow-builder.png)
 
@@ -52,15 +55,21 @@ Toolbar:
 
 | Control | Effect |
 |---|---|
-| **Load a starting point…** | Loads a preset: Omega3P dispersion sweep, S3P optimization, T3P power balance, Omega3P p-refinement, Omega3P frequency target, or an empty configuration. |
+| **Load template…** | Loads a template: Omega3P dispersion sweep, S3P optimization, T3P power balance, Omega3P p-refinement, Omega3P frequency target, or an empty configuration. |
 | **Seed from editor** | Rebuilds the configuration from the editor's current mesh, input file and marked fields. |
-| **Download .yaml** | Saves the YAML file. |
 | **View YAML file** | Shows or hides the YAML preview on the right. |
-| **Simulation Settings** | The same Slurm settings as in Simulation Setup. |
-| **Run Simulation** | Submits the study. |
+| **Workers** | How many sweep points run at once inside the one Slurm job. |
+| **Load workflow** | Opens a YAML on the cluster and every file it uses. Its folder becomes the study's folder. |
+| **Save** / **Save as…** | Writes the YAML, its files and `submit.sbatch` into the study's folder, or into a new one. |
+| **Simulation Settings** | The same Slurm settings and job name as in Simulation Setup. |
+| **Run Simulation** | Saves into the study's folder and submits. |
+
+**Load workflow**, **Save**, **Save as…**, **Simulation Settings** and
+**Run Simulation** sit in the same place as in Simulation Setup. The solver
+menu is hidden here.
 
 The builder saves your draft in the browser after every change. It is there
-when you come back.
+when you come back or reload the page.
 
 ### 3. Set the run mode
 
@@ -74,7 +83,7 @@ In **Run Mode**, choose **Parameter Sweep** and set:
 
 ### 4. Check directories and paths
 
-- **workdir**: filled with the run directory at submission. Leave it.
+- **workdir**: filled with the study's folder at submission. Leave it.
 - **workdir_mode**:
     - `auto` — one folder per point, named after the point's values.
     - `indexed` — one folder per point, named by its index.
@@ -151,16 +160,18 @@ of evaluations, and request nodes enough for the `tasks` of a step.
 
 ### 10. Submit
 
-Press **Run Simulation**. The dialog is the same as for a single job; its
-previews show the YAML and `submit.sbatch`.
+Set the study's folder first with **Save as…** (or **Load workflow**).
+**Run Simulation** turns green when the configuration has no errors, the
+folder is set and its cluster is signed in; hover over it to see what is
+missing. Press it to submit; there is no dialog.
 
-Uploaded into the run directory: the mesh, every input file the YAML uses, the
-YAML and `submit.sbatch`. The batch script loads ACE3P and the LUME-ACE3P
+Written into the folder: the mesh, every input file the YAML uses, the YAML
+and `submit.sbatch`. The batch script loads ACE3P and the LUME-ACE3P
 environment, then runs `run-lume-ace3p` on the YAML.
 
 With `workdir_mode` `auto` or `indexed`, the case folders are created inside
-the run directory as `case_<value>` or `case_<index>`. With `manual`, every
-point runs in the run directory itself.
+the study's folder as `case_<value>` or `case_<index>`. With `manual`, every
+point runs in the folder itself.
 
 The study appears in the Jobs dashboard as an ordinary job of its first
 solver.

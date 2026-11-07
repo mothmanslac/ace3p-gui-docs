@@ -18,6 +18,7 @@ changes, **Cancel** to discard them.
 | Container heading color | Seven colours | Colour of the container headings in the solver forms. |
 | Text color | Seven colours | Colour of the text in the input-file preview. |
 | Preview font size | Small, Medium, Large | Font size of the input-file preview. |
+| Mesh viewer background | Dark grey (default), ParaView blue, Black, Mid grey, Light grey, White | Background of the Mesh Viewer. Applied at once and kept across reloads. |
 
 ## Simulation
 

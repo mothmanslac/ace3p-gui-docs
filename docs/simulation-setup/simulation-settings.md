@@ -9,6 +9,10 @@ Orchestration toolbar; one set of values serves both.
 
 First pick the **Cluster**. The fields below change with it.
 
+**Job name (optional)** labels the job on the Jobs dashboard. It is shared by
+Simulation Setup and Workflow Orchestration and used by the next
+**Run Simulation** in either.
+
 ## NERSC Perlmutter
 
 | Field | Slurm option | Notes |
@@ -124,6 +128,4 @@ When the app runs on a cluster, the script is generated for that cluster.
 On the **SBATCH** tab press **Edit** to change the text directly, for example to
 add `#SBATCH` options the dialog does not offer, then press **Done**. Changing
 Simulation Settings, the mesh or the solver afterwards regenerates the script
-and discards the hand edits, so make them last. For a fully custom script, use
-**Upload custom files** in the Run Simulation dialog. See
-[Run a simulation](../running-jobs/run-simulation.md#custom-files).
+and discards the hand edits, so make them last.

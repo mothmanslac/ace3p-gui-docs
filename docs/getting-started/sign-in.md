@@ -11,9 +11,12 @@ authenticate once per session, not once per action.
 
 ## When the app asks you to sign in
 
-- You press **Run Simulation** and no cluster is signed in.
+- You press **Load simulation**, **Save**, **Save as…**, **Load** or a mesh
+  picker and no cluster is signed in.
 - You press **Sign in** next to a cluster at the bottom of **Settings**.
-- You pick a cluster in the Run Simulation dialog that is not signed in.
+
+**Run Simulation** stays grey until the cluster of the simulation's folder is
+signed in.
 
 ## NERSC Perlmutter
 
@@ -42,9 +45,7 @@ S3DF requires your password and approval of a **Duo** push.
 5. Press **Authenticate**, then approve the push on your phone within 60 seconds.
 
 Commands on S3DF run on the `iana` node, which has Slurm and the `/sdf` file
-system. The app reaches it from the login node over the same session. The node
-is set in the Run Simulation dialog under **Advanced → Compute node**. Leave it
-as `iana`.
+system. The app reaches it from the login node over the same session.
 
 ## Errors
 

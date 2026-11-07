@@ -19,9 +19,17 @@ The folder is readable only by you. It holds:
 | `app_config.json` | Remembered paths to Cubit and ParaView. |
 | `ai-agent/` | AI Assistant settings, your instructions, your guides, saved chats, and API keys if you chose to save them. |
 
-The browser keeps small preferences (current solver, the workflow builder
-draft, panel sizes, the last post-processing directory) in its local storage
-for this page.
+The browser keeps your work for this page in its local storage: every solver
+form, the selected mesh, the workflow builder draft and its files, the
+simulation and workflow folders, the view on screen, and preferences such as
+panel sizes and the Mesh Viewer background.
+
+- **Reloading the page** keeps all of it.
+- **Starting the app again** begins from an empty configuration with every
+  panel folded. **View → Undo clear** brings back the previous one until the
+  browser tab is closed.
+- **View → Clear app** empties it on demand. Sign-ins and Simulation Settings
+  are kept either way.
 
 Passwords are never stored.
 

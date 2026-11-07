@@ -38,8 +38,9 @@ most with an expandable detail.
 
 | Problem | Fix |
 |---|---|
-| **Run Simulation** stays grey | Hover over it: the tooltip lists what is missing (mesh, required fields, sbatch). |
-| Run directory refused | A job of yours is still active in it. Use another directory. |
+| **Run Simulation** stays grey | Hover over it: the tooltip lists what is missing (sign-in, a folder from Save as… or Load simulation, mesh, required fields, a sideset with no or two boundary conditions, sbatch). |
+| Folder refused | A job of yours is still active in it. **Save as…** into another folder. |
+| The form is empty after starting the app | Each launch starts empty. **View → Undo clear** brings the previous configuration back. |
 | `Invalid account` | Set your own account in Simulation Settings. |
 | `Job violates accounting/QOS policy` | Lower walltime or nodes, or choose another QOS. |
 

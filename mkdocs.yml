@@ -83,9 +83,9 @@ nav:
       - Parameter sweeps and optimization: workflow/index.md
   - Result Post Processing:
       - Overview: post-processing/index.md
+      - Data Explorer: post-processing/data-explorer.md
       - Acdtool: post-processing/acdtool.md
       - Field Viewer: post-processing/field-viewer.md
-      - Data Explorer: post-processing/data-explorer.md
       - Workflow Sweeps: post-processing/workflow-sweeps.md
   - AI Assistant:
       - Use the AI Assistant: ai/assistant.md

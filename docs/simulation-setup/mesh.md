@@ -3,7 +3,10 @@
 ## Mesh formats
 
 Choose the mesh in **ModelInfo → File** (TEM3P and Gun3P have the same picker
-in their problem containers). Three formats are accepted:
+in their problem containers). The picker opens a folder on the cluster, not
+your computer: on a Perlmutter or S3DF desktop that cluster, otherwise NERSC
+Perlmutter (sign in first). **Load simulation** in the toolbar loads the input
+file and the mesh of its folder together. Three formats are accepted:
 
 | Format | What happens on selection | What the batch script does |
 |---|---|---|
@@ -47,13 +50,27 @@ again on the compute node. Both use the same journal.
 | Reset the view | Double-click, or the ↺ button |
 | Look along an axis | **X**, **Y**, **Z** (press again for the opposite side) |
 | Perspective / parallel projection | **Persp** |
-| Save an image | **PNG** |
+| Show or hide the rulers | **Ruler** |
+| Save an image | **PNG** (includes the rulers and the axes) |
 | Identify a surface | Hover: the sideset id and its boundary condition are shown |
 
-The side column has three panels:
+The view carries two guides:
 
-- **Mesh parameters:** node count, boundary triangles, surface edges, number
-  of sidesets and the X/Y/Z extent of the model.
+- **Axes at the origin:** the *x*, *y*, *z* arrows start at the mesh's
+  coordinate origin, marked with a dot. When the origin is outside the view,
+  the axes move to the lower-left corner.
+- **Rulers:** one line per axis along an edge of the model's bounding box,
+  with the coordinate at each end, for example *z* = −175 mm and
+  *z* = 175 mm. Each axis uses one unit (m, mm or µm) and at most three
+  decimals. A ruler seen almost end-on is left out.
+
+The background colour is set in
+[Settings → Appearance → Mesh viewer background](../reference/settings.md).
+
+The side column has these panels:
+
+- **Mesh parameters:** the number of elements in each block and the number of
+  sidesets.
 - **Display → Surface mesh:** shows or hides the element edges. It is disabled
   for very large meshes, with the reason in its tooltip.
 - **Sidesets:** one checkbox per sideset, with its colour. **All** and

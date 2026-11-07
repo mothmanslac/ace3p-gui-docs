@@ -1,6 +1,8 @@
 # The interface
 
-The app opens on **Simulation Setup** with an empty Omega3P form.
+The app opens on **Simulation Setup** with an empty form. Every launch starts
+from an empty configuration with every panel folded; a reload of the browser
+page keeps your work (see [Where the app stores data](../reference/data.md)).
 
 ![First launch: the Simulation Setup view](../images/01-first-launch.png)
 
@@ -12,15 +14,15 @@ From left to right:
 
 | Control | What it does |
 |---|---|
-| **Solver menu** (shows `Omega3P`) | Picks the ACE3P solver. See [Choose a solver](../simulation-setup/modules.md). |
+| **Solver menu** (shows `Omega3P`) | Picks the ACE3P solver. See [Choose a solver](../simulation-setup/modules.md). Hidden in Workflow Orchestration, where a study chains several solvers. |
 | **Examples** | Opens ready-made example files. Shown on Simulation Setup and Workflow Orchestration. See [Examples](../simulation-setup/examples.md). |
 | Cluster badge | Appears when the app runs on Perlmutter or S3DF. Shows the cluster and your user name. |
 | **Simulation Setup** | The solver editor: forms, mesh viewer, input file and sbatch preview. |
 | **Workflow Orchestration** | The LUME-ACE3P builder for sweeps and optimizations. See [Workflow Orchestration](../workflow/index.md). |
-| **Result Post Processing** | Acdtool, Field Viewer, Data Explorer and Workflow Sweeps. See [Result Post Processing](../post-processing/index.md). |
+| **Result Post Processing** | Data Explorer, Acdtool, Field Viewer and Workflow Sweeps. See [Result Post Processing](../post-processing/index.md). |
 | **AI Assistant** | A chat assistant that reads your jobs and results. See [AI Assistant](../ai/assistant.md). |
 | Wrench icon | Opens the **Jobs** dashboard. See [Monitor jobs](../running-jobs/jobs-dashboard.md). |
-| List icon | The **View** menu: Refresh, Reset form, Undo reset, Messages. |
+| List icon | The **View** menu: Refresh, Clear app, Undo clear, Messages. |
 | Gear icon | **Settings**: appearance, simulation checks, help, cluster sign-in. |
 
 The active view's tab is highlighted. One view is visible at a time. Switching
@@ -29,13 +31,16 @@ look at the Jobs dashboard.
 
 ## Simulation Setup layout
 
+- **Toolbar, across the top:** the **Cubit** and **ParaView** launch buttons
+  on the left; the simulation's folder, **Load simulation**, **Save**,
+  **Save as…**, **Simulation Settings** and **Run Simulation** on the right.
+  These five buttons sit in the same place in Workflow Orchestration. See
+  [Run a simulation](../running-jobs/run-simulation.md).
 - **Left pane:** the solver form, one collapsible box per input-file container
   (`ModelInfo`, `FiniteElement`, `EigenSolver`, …). A red dot on a box means a
   required field inside it is empty.
-- **Right pane, top:** the **Cubit** and **ParaView** launch buttons,
-  **Simulation Settings** and **Run Simulation**.
-- **Right pane, middle:** the **Mesh Viewer** with the Cubit parameters, display
-  options and sideset list.
+- **Right pane, top:** the **Mesh Viewer** with the Cubit parameters, mesh
+  parameters, display options and sideset list.
 - **Right pane, bottom:** the **Sbatch destination** menu and the
   **Input File / Sbatch** preview with **Load**, **Edit**, **Save** and
   **Add to workflow**.
@@ -52,8 +57,8 @@ inside it.
 | Item | What it does |
 |---|---|
 | **Refresh** | On the Jobs dashboard, reloads the job list or the open job. In the editor, reloads the page. |
-| **Reset form** | Clears the Omega3P or S3P form and the selected mesh. |
-| **Undo reset** | Restores the form cleared by the last reset. |
+| **Clear app** | After a confirmation, empties every solver form, the mesh, the workflow builder (an empty configuration) and its files, forgets the simulation and workflow folders, and folds every panel. Sign-ins and Simulation Settings are kept. |
+| **Undo clear** | Brings back what Clear app (or the empty start of a new launch) removed, until the browser tab is closed. |
 | **Messages** | Opens the Messages window. A badge counts unread messages and turns red when one is an error. |
 
 ## Messages window

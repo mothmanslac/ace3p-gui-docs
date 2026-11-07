@@ -27,8 +27,13 @@ required fields that are still empty.
 
 ## Step 2: Choose the mesh
 
+Meshes and input files are read from the cluster, so sign in first (see
+[Step 8](#step-8-sign-in)) and copy `pillboxwg.jou` to a folder there, for
+example `/pscratch/sd/j/jdoe/ace3p-runs/pillbox-eigen`.
+
 1. Open the **ModelInfo** box.
-2. Next to **File**, press **Choose File** and select `pillboxwg.jou`.
+2. Next to **File**, press **Choose File**. The cluster folder picker opens.
+   Go to the folder, select `pillboxwg.jou` and press **Open**.
 
 The app runs Cubit on the journal in batch mode, converts the exported `.gen`
 to `.ncdf`, and draws the mesh in the **Mesh Viewer**. A small journal takes
@@ -74,8 +79,8 @@ For this model:
 | Waveguide | 3, 4, 5 |
 
 Use the sideset definitions in your own journal (`sideset <n> surface ...`) to
-decide which sideset gets which condition. A sideset left unassigned is not
-written to the input file.
+decide which sideset gets which condition. Every sideset needs exactly one
+condition: **Run Simulation** stays grey while a sideset has none or two.
 
 ## Step 4: Set the solver parameters
 
@@ -172,43 +177,39 @@ Cubit, converts it with `acdtool`, and runs Omega3P with `srun`. Logs go to
 
 ## Step 8: Sign in
 
-Press **Run Simulation**. The button is green when the mesh, input file and
-sbatch script are ready; its tooltip names anything still missing.
-
-If NERSC is not signed in yet, the **Authenticate** dialog opens:
+Open **Settings** (gear icon) and press **Sign in** next to NERSC, or press a
+cluster button such as **Save as…**. The **Authenticate** dialog opens:
 
 ![Sign in to NERSC](../images/13-sign-in.png)
 
 Enter your user name, password and the MobileOTP code, then press
-**Authenticate**. The Run Simulation dialog opens next. See
-[Sign in to a cluster](../getting-started/sign-in.md) for S3DF.
+**Authenticate**. See [Sign in to a cluster](../getting-started/sign-in.md)
+for S3DF.
 
-## Step 9: Submit
+## Step 9: Save and submit
 
-![The Run Simulation dialog](../images/15-run-simulation.png)
-
-1. **Job name:** `pillbox-eigen`. It labels the job in the dashboard.
-2. **Submission mode:** **Use generated files**.
-3. **Cluster:** NERSC Perlmutter.
-4. **Run directory:** the folder on the cluster where the job runs. Use
-   scratch, for example `/pscratch/sd/j/jdoe/ace3p-runs/pillbox-eigen`.
-   Press **Browse** to pick or create a folder.
+1. In **Simulation Settings**, type a **Job name**, for example
+   `pillbox-eigen`. It labels the job in the dashboard.
+2. Press **Save as…** in the toolbar and choose the job's folder on scratch,
+   for example `/pscratch/sd/j/jdoe/ace3p-runs/pillbox-eigen`
+   (**New folder** creates it). The path appears left of **Load simulation**.
 
     ![Browse the cluster file system](../images/16-folder-picker.png)
 
-5. **Mesh file:** already set to `pillboxwg.jou`.
-6. Open **Preview** to check the input file and sbatch script one last time.
-7. Press **Run Simulation**.
+3. **Run Simulation** turns green once you are signed in, the folder is set,
+   the mesh and required fields are in place and every sideset has one
+   boundary condition. Hover over it if it stays grey.
+4. Press **Run Simulation**. The files are written into the folder and the job
+   is submitted, with no further questions.
 
-The progress bar shows the upload of the mesh, the input file and the script,
-then `sbatch`. On success:
+Progress shows on the button and in the Messages window. On success:
 
 ![Job submitted](../images/17-submitted.png)
 
-!!! warning "Run directory rules"
-    The files go into the run directory exactly as typed. No subfolder is
-    added. A run directory that still holds a submitted, queued or running job
-    is refused: use a new folder for each concurrent job.
+!!! warning "Folder rules"
+    The files go into the folder exactly as named. No subfolder is added. A
+    folder that still holds a submitted, queued or running job is refused:
+    use **Save as…** into a new folder for each concurrent job.
 
 ## Step 10: Monitor the job
 
@@ -249,4 +250,4 @@ For R/Q, kick factors, field maps and plots of result tables, open
 - [x] The input file preview contains the values you intended.
 - [x] Simulation Settings: correct cluster, **your** account, a QOS that fits
       the walltime.
-- [x] The run directory is on scratch and not used by a running job.
+- [x] The simulation's folder is on scratch and not used by a running job.

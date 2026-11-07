@@ -30,8 +30,11 @@ numbers as circles.
   other row.
 - A sideset number that the input file uses but the mesh does not contain is
   shown with a dashed outline. Click it to remove it.
-- Without a mesh, the rows are plain text fields. Type comma-separated sideset
-  numbers, for example `3, 4`.
+- Without a mesh, the rows are plain text fields. Separate sideset numbers with
+  commas or spaces: `3, 4` and `3 4` are both accepted, and the circles follow
+  either form, also when you type into the input file text.
+- **Run Simulation** stays grey until every sideset of the mesh has exactly one
+  boundary condition.
 
 ## Additional parameters and containers
 
@@ -58,9 +61,9 @@ Tick **View input file and sbatch** to show the text. Choose the
 
 | Button | Effect |
 |---|---|
-| **Load** | Opens an input file from your computer. The extension picks the solver (`.omega3p` → Omega3P). The form is filled from the file. |
+| **Load** | Opens an input file from a folder on the cluster. The extension picks the solver (`.omega3p` → Omega3P). The form is filled from the file. To load the input file together with its mesh, use **Load simulation** in the toolbar. |
 | **Edit** | Makes the text editable. The form follows your edits. Press **Done** to finish. |
-| **Save** | Downloads the file as `input.<solver>`. |
+| **Save** | Downloads the file as `input.<solver>`. **Save** in the toolbar writes it to the cluster instead. |
 | **Add to workflow** | Adds the current input file to the workflow file library for [Workflow Orchestration](../workflow/index.md). |
 
 On the **SBATCH** tab, **Edit** and **Save** do the same for the batch script.
@@ -71,11 +74,13 @@ On the **SBATCH** tab, **Edit** and **Save** do the same for the batch script.
 
 ## Comments in loaded files
 
-Comments in a loaded file are kept while the text is unchanged. Once you edit a
-field, the file is regenerated from the form and comments are dropped. Keep a
+Comments in a loaded file are kept while the text is unchanged. A comment at the
+end of a line (`Order: 2   // p order`) is not part of the value. Once you edit
+a field, the file is regenerated from the form and comments are dropped. Keep a
 copy of a heavily commented file.
 
-## Reset
+## Start again
 
-**View → Reset form** clears the Omega3P or S3P form and the selected mesh.
-**View → Undo reset** brings it back.
+**View → Clear app** empties every form, the mesh and the workflow builder and
+folds every panel. **View → Undo clear** brings it all back. A new launch of the
+app starts empty the same way; a reload of the page keeps your work.
