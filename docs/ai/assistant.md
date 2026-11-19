@@ -1,9 +1,11 @@
 # Use the AI Assistant
 
-The **AI Assistant** is a chat assistant with access to your jobs and files. It
-reads files on the clusters you are signed in to and on your computer, plots
-results in the chat, explains logs and errors, and proposes input files and
-LUME-ACE3P workflows that you can load into the editor with one click.
+The **AI Assistant** is an agent with access to the app, your jobs and your
+files. It reads files on the clusters you are signed in to and on your
+computer, sets up meshes, input files and LUME-ACE3P workflows in the app's own
+views, runs simulations, follows the jobs and plots the results in the chat.
+With **Agentic mode** on it carries a whole task through without asking for
+approval at each step.
 
 Before the first use, set up a model provider: see
 [Set up a model provider](providers.md).
@@ -55,28 +57,78 @@ paid providers, the cost.
 
 | Action | Needs your approval |
 |---|---|
-| Read the app's state (input file, sbatch, workflow, jobs) | No |
+| Read the app's state (input file, sbatch, workflow, mesh, jobs) | No |
 | List folders, read files, search file names and contents | No |
 | Read result tables (`omega3p.out`, S-parameters, LUME tables, column files) | No |
 | Plot data in the chat | No |
 | Inspect the header of a NetCDF file (`.ncdf`, `.mod`) | No |
-| Propose an input file or a workflow YAML | No — you choose whether to apply it |
+| Select a mesh, set Cubit journal variables and remesh | No |
+| Check a mesh: element quality, elements per wavelength, sidesets, boundary conditions | No |
+| Load or edit the input file in the editor | No |
+| Build or edit a LUME-ACE3P workflow (sweep, optimization) and its files | No |
+| Change Simulation Settings (cluster or this PC, processes, queue, walltime) | No |
+| Follow a job: state, log tails, result files | No |
 | Write or edit a file | **Yes** (setting) |
 | Run a shell command (maximum 300 s) | **Yes** (setting) |
+| Run a simulation or a workflow study | **Yes** (setting) |
+
+In Agentic mode none of these asks.
 
 ### Approvals
 
-When the assistant wants to write a file or run a command, an approval card
-shows the diff or the command. Press **Approve** or **Decline**. An edited file
-keeps its previous version as `<file>.agent-bak`.
+When the assistant wants to write a file, run a command or start a
+simulation, an approval card shows the diff, the command or the run. Press
+**Approve** or **Decline**. An edited file keeps its previous version as
+`<file>.agent-bak`.
 
-Turn approvals off in **⚙ → Permissions** only if you accept that the
-assistant changes files and runs commands without asking.
+Turn approvals off in **⚙ → Permissions**, or use Agentic mode, only if you
+accept that the assistant changes files, runs commands and submits jobs
+without asking.
 
 !!! warning
     Commands run through the same cluster session as the rest of the app and
-    are limited to 300 seconds. The assistant does not start solver runs; it
-    prepares files that you submit with **Run Simulation**.
+    are limited to 300 seconds. Solver runs are submitted as jobs through
+    **Run Simulation**, never run through that session.
+
+## Agentic mode
+
+Press **Agentic** in the assistant's bar and confirm once. The button reads
+**Agentic: on** until you click it again; the choice is kept in this browser.
+While it is on:
+
+- No approval cards. Each edit, command and run is still listed in the chat as
+  a step you can expand.
+- The assistant does not stop to ask for details. It picks values from the
+  physics, states them as assumptions and continues.
+- **Run simulations.** It meshes the Cubit journal, checks the mesh and its
+  sidesets, writes the input file and boundary conditions, and presses **Run
+  Simulation** for the target chosen in Simulation Settings: NERSC Perlmutter,
+  S3DF or Local (this PC). Each run gets its own folder,
+  `agent-<name>-<date>-<time>`, under the target's base directory.
+- **Parametrization.** It sets Cubit journal variables and solver parameters
+  directly, or builds a LUME-ACE3P parameter sweep or optimization in Workflow
+  Orchestration and submits the study.
+- **Closed loop.** It follows the job to the end, reads the results
+  (`omega3p.out`, S-parameters, LUME tables), plots them, compares them with
+  the goal and changes the design. It stops when the goal is met, when another
+  iteration would not change the conclusion, or after about five iterations.
+- **Failures.** It reads the error log, fixes the cause and resubmits; after
+  three failures of the same kind it stops and reports.
+- A task may take up to 200 model steps (setting `agentic_max_steps`) instead
+  of 40.
+- **Stop** ends the run at any time, also while it waits for a job.
+
+It finishes with the design and its parameters, the numbers that show the goal
+is met, the assumptions it made and the run folder.
+
+Example: *Design a pillbox cavity with its TM010 mode at 1.3 GHz.* On the Local
+target the assistant meshed a CW23 pillbox journal, ran Omega3P three times
+with radii of 88.3, 92.33 and 92.10 mm, and stopped at 1.29978 GHz with
+Q0 = 25,134, with no approvals asked.
+
+On the Local target keep the number of processes at or below the physical core
+count and the problem within the memory the target reports; the assistant
+follows the same rule.
 
 ### Proposals
 
@@ -108,14 +160,35 @@ Every chat is saved on your computer when an answer finishes.
 A chat belongs to one provider. If you switch providers, an old chat keeps its
 transcript but the model starts the conversation fresh.
 
-## Your instructions and guides
+## Your instructions, skills and guides
 
-In **⚙ → Your instructions**, write standing instructions added to every chat:
+All three are text the assistant reads; there is no training step.
+
+**Your instructions** (**⚙ → Your instructions**) are added to every chat:
 units you prefer, how to name plots, project paths, how to report. They are
 saved in `instructions.md` in the app's AI folder.
 
+**Skills** (**⚙ → Skills**) are your own procedures in Claude's skill format:
+a folder with a `SKILL.md` (front matter `name` and `description`, then the
+instructions) and any files beside it, such as templates, reference tables or
+scripts. A skill written for Claude Code or claude.ai works unchanged. The
+assistant sees each enabled skill's name and description and opens a skill
+when a task matches it.
+
+- **Upload .md / .zip** adds a `SKILL.md`, any Markdown file, or a `.zip` /
+  `.skill` archive of a skill folder.
+- **Add from link** adds a skill from a GitHub folder or file, or a raw `.md`
+  or archive URL.
+- **Write a skill** opens a template in an editor.
+- Each skill can be switched off, edited or deleted.
+- **Also use my Claude Code skills** offers the skills in `~/.claude/skills`
+  as well, read only.
+
+A script bundled with a skill runs only as a shell command, which asks first
+unless Agentic mode is on.
+
 **Reference guides** are Markdown files the assistant reads when a task needs
-them. The app ships guides on ACE3P result files, job debugging, LUME-ACE3P and
-input files. Add your own as `.md` files in the folder shown in the settings.
+them. The app ships guides on ACE3P result files, job debugging, LUME-ACE3P,
+input files and design studies. Add your own as `.md` files in the folder shown in the settings.
 Start each file with a line `description: ...` that says when to use it. A
 guide with the same name as a shipped one replaces it.

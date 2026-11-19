@@ -19,7 +19,7 @@ submits the job, tracks it, and reads the results back.
 | Follow job status, read logs, download results, cancel | **Jobs** (wrench icon) |
 | Run parameter sweeps and optimizations with LUME-ACE3P | **Workflow Orchestration** |
 | Compute RF quantities with acdtool, plot fields and result tables | **Result Post Processing** |
-| Ask questions about jobs and results, get plots and proposed input files | **AI Assistant** |
+| Let an agent set up, run and iterate simulations and studies (Agentic mode), or ask about jobs and results | **AI Assistant** |
 
 ## How to read this guide
 
