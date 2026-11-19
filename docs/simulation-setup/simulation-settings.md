@@ -7,7 +7,9 @@ Orchestration toolbar; one set of values serves both.
 
 ![Simulation Settings for NERSC](../images/12-simulation-settings.png)
 
-First pick the **Cluster**. The fields below change with it.
+First pick where to run in **Run on**: NERSC Perlmutter, S3DF, or **Local
+(this PC)** on a Windows workstation (see [Local simulation on
+Windows](#local-simulation-on-windows)). The fields below change with it.
 
 **Job name (optional)** labels the job on the Jobs dashboard. It is shared by
 Simulation Setup and Workflow Orchestration and used by the next
@@ -37,6 +39,73 @@ Simulation Setup and Workflow Orchestration and used by the next
 | CPUs per task | `--cpus-per-task` | |
 | Email | `--mail-user` | Optional. Adds `--mail-type=END,FAIL`: you get a mail when the job ends or fails. |
 | Walltime | `--time` | |
+
+## Local simulation on Windows
+
+**Local (this PC)** runs the solvers on the Windows workstation the app runs
+on, with no cluster, sign-in or queue.
+
+**Requirements**
+
+- The Windows build of the app. The option is not offered on Linux or macOS.
+- A standalone ACE3P installation: **ACE3P for Windows**, installed with its
+  own installer (default folder `%LOCALAPPDATA%\Programs\ACE3P\bin`, added to
+  `PATH`). Its launchers (`omega3p.exe`, `s3p.exe`, `t3p.exe`,
+  `acdtool.exe`, `ace3p.exe`, ...) run the Linux solvers under MPI in a small
+  WSL runtime. The GUI does not include ACE3P itself.
+- Coreform Cubit on the same PC, only if the mesh is a `.jou` journal. A
+  `.gen` or `.ncdf` mesh needs no Cubit.
+
+**Choosing it**
+
+1. In Simulation Settings set **Run on** to **Local (this PC)** (or pick it in
+   the **Sbatch destination** menu).
+2. The first time, the **Locate omega3p.exe** dialog opens. It is filled in
+   when ACE3P is on `PATH` or in the default folder, and shows the cores and
+   memory ACE3P can use, for example *Found on PATH · 4 cores · 7.7 GB*.
+   Otherwise press **Browse…** and choose `omega3p.exe` (or its `bin`
+   folder). Press **Use this ACE3P**.
+3. Simulation Settings then shows the location in the **ACE3P for Windows**
+   row. **Change…** points the app at another installation.
+
+| Field | Launcher option | Notes |
+|---|---|---|
+| Processes | `-n` | Number of MPI processes. Use at most the number of physical cores. |
+
+There is no account, queue, node count or walltime.
+
+**Folders and runs**
+
+- While Local is chosen, **Load simulation**, **Save** and **Save as…** use
+  folders on this PC. The default is `Documents\ACE3P-runs` (the
+  **Scratch** button in the folder picker). Run Simulation needs a folder on
+  this PC when Local is chosen, and a cluster folder otherwise.
+- **Run Simulation** writes the input file, the mesh and `run-local.cmd` to
+  the folder and starts the script in the background. The job keeps running
+  if the GUI is closed.
+- Logs are `<solver>-<job>.out` and `<solver>-<job>.err` in the folder, as on
+  the clusters. The Jobs dashboard shows the state and the logs, lists and
+  downloads results, and **Cancel** stops the solver (`ace3p cancel`).
+- Result Post Processing lists **This PC** as a source, so the Data Explorer,
+  Field Viewer and Workflow Sweeps work on local runs.
+
+**Workflow studies**
+
+Workflow Orchestration runs locally with the LUME-ACE3P bundled in the app;
+no Python environment is needed. Only the **Single Run** and **Parameter
+Sweep** modes run locally. **Optimization** and **GP Surrogate Model** need
+Xopt and PyTorch, which are not bundled; run those on a cluster.
+
+**Sizing**
+
+- Every MPI process holds its own part of the problem, and ACE3P can use only
+  the memory of its WSL runtime (shown in the Locate dialog), not all of the
+  PC's memory. Memory grows with the mesh size and `FiniteElement → Order`.
+- Hyperthreads do not speed up the solvers; keep **Processes** at or below
+  the physical core count.
+- Example: on a 4-core workstation with 7.7 GB available to ACE3P, Omega3P
+  problems above about 400,000 unknowns ran out of memory. Larger problems
+  belong on Perlmutter or S3DF.
 
 ## The generated script
 
@@ -97,6 +166,28 @@ Simulation Setup and Workflow Orchestration and used by the next
     srun -n 32 --cpu-bind=cores /sdf/group/rfar/ace3p/bin/omega3p input.omega3p
     ```
 
+=== "Local (this PC)"
+
+    ```bat
+    @echo off
+    rem omega3p on this PC with ACE3P for Windows, 4 MPI process(es).
+    rem Started by the ACE3P GUI; output goes to <module>-<job>.out / .err.
+    cd /d "%~dp0"
+    if not defined ACE3P_JOB_ID set "ACE3P_JOB_ID=run-%RANDOM%"
+
+    rem generate the mesh from the Cubit journal, then convert it to .ncdf
+    if not defined ACE3P_CUBIT_EXE set "ACE3P_CUBIT_EXE=cubit"
+    "%ACE3P_CUBIT_EXE%" -nographics -batch -nojournal -noecho -information off pillboxwg.jou
+    if errorlevel 1 exit /b %errorlevel%
+    acdtool meshconvert pillboxwg.gen
+    if errorlevel 1 exit /b %errorlevel%
+
+    omega3p input.omega3p -n 4 --job-id %ACE3P_JOB_ID%
+    ```
+
+    The local script is `run-local.cmd`, a Windows batch file. It can also be
+    run by hand from a command prompt in the run folder.
+
 What the script does, in order:
 
 1. Requests the resources from Simulation Settings.
@@ -110,7 +201,7 @@ What the script does, in order:
 ## Sbatch destination
 
 The **Sbatch destination** menu below the Mesh Viewer switches the script
-between NERSC and S3DF without opening the dialog. The choice is remembered.
+between NERSC, S3DF and Local (this PC) without opening the dialog. The choice is remembered.
 When the app runs on a cluster, the script is generated for that cluster.
 
 ## Sizing a job
