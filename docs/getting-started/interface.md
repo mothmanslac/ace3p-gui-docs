@@ -20,7 +20,7 @@ From left to right:
 | **Simulation Setup** | The solver editor: forms, mesh viewer, input file and sbatch preview. |
 | **Workflow Orchestration** | The LUME-ACE3P builder for sweeps and optimizations. See [Workflow Orchestration](../workflow/index.md). |
 | **Result Post Processing** | Data Explorer, Acdtool, Field Viewer and Workflow Sweeps. See [Result Post Processing](../post-processing/index.md). |
-| **AI Assistant** | An agent that sets up and runs simulations and reads your jobs and results; Agentic mode runs a task without per-step approvals. See [AI Assistant](../ai/assistant.md). |
+| **AI Assistant** | A chat assistant that reads your jobs and results. See [AI Assistant](../ai/assistant.md). |
 | Wrench icon | Opens the **Jobs** dashboard. See [Monitor jobs](../running-jobs/jobs-dashboard.md). |
 | List icon | The **View** menu: Refresh, Clear app, Undo clear, Messages. |
 | Gear icon | **Settings**: appearance, simulation checks, help, cluster sign-in. |

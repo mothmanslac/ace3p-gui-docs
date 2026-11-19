@@ -92,6 +92,60 @@ without asking.
 
 ## Agentic mode
 
+### What "agentic" means here
+
+The assistant is three parts:
+
+- **Model.** A large language model (Claude, or a model behind an
+  OpenAI-compatible server). It only produces text. Besides plain answers it
+  can produce *tool calls*: a tool name with JSON arguments, such as
+  `edit_journal {"variables": {"radius": 92.1}}`.
+- **Tools.** 28 functions the app defines, each with a JSON schema the
+  model is given. They read files and result tables, plot, select and remesh
+  a mesh, edit the input file, build a LUME-ACE3P workflow, change Simulation
+  Settings, run a shell command, submit a simulation (`run_simulation`) and
+  follow a job (`job_status`). App tools act on the GUI itself, through the
+  same functions the buttons call, so every change shows up in the views.
+- **Harness.** The program around the model that turns its text into actions.
+  In this app it is the backend's agent loop (`backend/aiagent`). For each
+  message it:
+    1. builds the *context*: a system prompt (the assistant's role and working
+       rules, an index of guides and skills, your instructions, the signed-in
+       clusters, the module on screen) plus the conversation so far;
+    2. sends the context and the tool schemas to the model;
+    3. runs each tool call the model returns, after an approval check if
+       the tool writes, runs a command or submits a job;
+    4. appends the results to the conversation and goes back to step 2.
+
+    The loop ends when the model answers without a tool call, when you press
+    **Stop**, or when the step limit is reached. One pass through steps 2–4 is
+    a *step*. The harness also enforces the limits that do not depend on the
+    model: the 300 s command timeout, file size caps, and the rule that solver
+    runs go through Run Simulation as jobs. With the **Claude subscription**
+    provider the loop is run by Claude Code (`claude -p`) instead. Its own file
+    and shell tools are switched off, and it reaches the same app tools through
+    an MCP server the backend provides, with the same approval checks.
+
+The model decides which tool to call next; the harness decides whether and
+how the call is carried out. Without Agentic mode the harness stops at each
+gated call for an approval card, and the step limit is 40, so a long task
+comes back to you several times.
+
+**Agentic mode changes only the harness settings, not the model or the
+tools:**
+
+| | Normal | Agentic |
+|---|---|---|
+| Approval check for writes, commands and submissions | Approval card, or the **⚙ → Permissions** setting | Granted automatically |
+| Step limit per message | 40 (`max_steps`) | 200 (`agentic_max_steps`) |
+| System prompt | Base rules: propose, ask before submitting | Base rules plus an agentic section: do not ask, state assumptions, run the simulation, read results, iterate |
+
+The model has no access beyond the tools. It cannot reach a cluster you are
+not signed in to, start a solver outside a job, or run a command longer than
+300 s, in either mode.
+
+### Using it
+
 Press **Agentic** in the assistant's bar and confirm once. The button reads
 **Agentic: on** until you click it again; the choice is kept in this browser.
 While it is on:
